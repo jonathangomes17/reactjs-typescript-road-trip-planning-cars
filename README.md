@@ -43,7 +43,7 @@
 
 ##### How to
 
-1. Copie o arquivo `config/{AMBIENTE}.env` para dentro da raiz do projeto
+1. Copie o arquivo `config/.env.{AMBIENTE}` para dentro da raiz do projeto
 2. Mantenha sempre todos os ambientes com as mesmas variáveis para evitar problemas sistêmicos
 
 ### Setup
