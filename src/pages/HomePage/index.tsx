@@ -1,5 +1,4 @@
 import React from 'react'
-// import Lottie from 'react-lottie'
 
 import Form from './Form'
 import Map from './Map'

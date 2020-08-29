@@ -5,10 +5,10 @@ const BaseHeader = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: lightgray;
+  border-bottom: solid 1px lightgray;
 
   > h1 {
-    font-size: 2rem;
+    font-size: 3rem;
     margin: 1rem 0;
     color: #767593;
   }
