@@ -3,19 +3,34 @@ import React from 'react'
 // Components
 import Button from '../../components/Button'
 import Input from '../../components/Input'
+import Grid from '../../components/Grid'
+import Row from '../../components/Grid/Row'
 
 function HomePage() {
   return (
     <>
-      <h1>Home Page</h1>
+      <h1>Planejando viajar de carro? Nós temos a melhor rota para você \o/</h1>
 
-      <Input placeholder={'Origem'} />
-      <Input placeholder={'Destino'} />
-      <Input placeholder={'Tempo de Permanência'} />
+      <Grid>
+        <Row col={6}>
+          <Input placeholder={'Origem'} />
+        </Row>
+        <Row col={6}>
+          <Input placeholder={'Destino'} />
+        </Row>
+      </Grid>
 
-      <Button primary bigger>
-        + Adicionar
-      </Button>
+      <Grid>
+        <Row col={6}>
+          <Input placeholder={'Tempo de Permanência'} />
+        </Row>
+
+        <Row col={6}>
+          <Button primary bigger>
+            + Adicionar
+          </Button>
+        </Row>
+      </Grid>
     </>
   )
 }

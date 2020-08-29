@@ -16,6 +16,9 @@ const BaseButton = styled.button`
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
   pointer-events: visible;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
 
   &[disabled] {
     color: #dadada;
@@ -40,7 +43,7 @@ const BaseButton = styled.button`
     props.bigger &&
     css`
       font-size: 1.5rem;
-      padding: 1rem 2rem;
+      padding: 1.25rem 2rem;
     `}
 `
 
