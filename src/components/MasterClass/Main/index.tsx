@@ -1,7 +1,8 @@
 import React from 'react'
+import RTPCMain from './styles'
 
 const Main: React.FC = ({ children }) => {
-  return <main>{children}</main>
+  return <RTPCMain>{children}</RTPCMain>
 }
 
 export default Main

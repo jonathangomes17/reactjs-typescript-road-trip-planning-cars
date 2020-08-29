@@ -5,12 +5,12 @@ const BaseHeader = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: lightgray;
 
   > h1 {
     font-size: 2rem;
     margin: 1rem 0;
-    color: #7e7e7e;
-    border-bottom: solid 0.5rem grey;
+    color: #767593;
   }
 
   > svg {

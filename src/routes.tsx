@@ -4,17 +4,17 @@ import { Route, Switch, BrowserRouter } from 'react-router-dom'
 
 import HomePage from './pages/HomePage'
 
-import Main from './containers/Main'
+import MasterClass from './components/MasterClass'
 
 function Routes() {
   return (
-    <Main>
+    <MasterClass>
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={HomePage} />
         </Switch>
       </BrowserRouter>
-    </Main>
+    </MasterClass>
   )
 }
 
