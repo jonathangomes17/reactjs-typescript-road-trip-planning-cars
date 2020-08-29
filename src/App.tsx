@@ -1,18 +1,22 @@
 import React from 'react'
-import Button from './components/Button'
+
+// Global styles
 import GlobalStyles from './styles'
+
+// Containers
 import Header from './containers/Header'
+import Footer from './containers/Footer'
+
+// Routes
+import Routes from './routes'
 
 function App() {
   return (
     <>
       <GlobalStyles />
-
       <Header />
-
-      <Button primary bigger>
-        Traçar melhor rota
-      </Button>
+      <Routes />
+      <Footer />
     </>
   )
 }
