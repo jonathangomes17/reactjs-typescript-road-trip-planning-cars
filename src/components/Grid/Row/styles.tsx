@@ -10,6 +10,12 @@ const BaseRow = styled.div`
         return '50%'
     }
   }};
+
+  @media (max-width: 768px) {
+    flex-basis: 100%;
+    flex-direction: column;
+    padding: 0.25rem 0;
+  }
 `
 
 const RTPCRow: React.FC<IRow> = (props) => {
