@@ -1,7 +1,7 @@
 interface IButton {
   primary?: boolean
   disabled?: boolean
-  loading?: boolean
+  loading?: number
   bigger?: boolean
   onClick?: any
   children: any

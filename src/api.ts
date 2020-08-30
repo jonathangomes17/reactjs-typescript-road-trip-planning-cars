@@ -1,12 +1,19 @@
-const getDistanceMatrix = async (lat: string, log: string, destinations: string) => {
+const getDistanceMatrix = async (origin: object, destination: object) => {
+  // @ts-ignore
+  origin = `${origin.lat},${origin.lng}`
+
+  // @ts-ignore
+  destination = `${destination.lat},${destination.lng}`
+
   const response = await fetch(
-    `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${lat},${log}&destinations=${destinations}key=AIzaSyDX3HTIsk87Bi4CFYJ2tUSXkAQcSM_BUpA`,
+    `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${origin}&destinations=${destination}&key=AIzaSyDX3HTIsk87Bi4CFYJ2tUSXkAQcSM_BUpA`,
   )
+
   return response.json()
 }
 
-const getLatLog = async (address: string) => {
-  const response = await fetch(
+const getLatLng = async (address: string) => {
+  let response = await fetch(
     `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyDX3HTIsk87Bi4CFYJ2tUSXkAQcSM_BUpA`,
   )
 
@@ -20,4 +27,4 @@ const getClimate = async (cityName: string) => {
   return response.json()
 }
 
-export { getDistanceMatrix, getLatLog, getClimate }
+export { getDistanceMatrix, getLatLng, getClimate }

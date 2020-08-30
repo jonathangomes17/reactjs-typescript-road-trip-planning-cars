@@ -1,13 +1,13 @@
 import React from 'react'
+
 import RTPCMap from './styles'
-// import Animation from './Animation'
+
 import GoogleMaps from './GoogleMap'
 
-const Map: React.FC = (props) => {
+const Map: React.FC = () => {
   return (
     <RTPCMap>
-      {/* <Animation /> */}
-      <GoogleMaps />
+      <GoogleMaps key={'GM001'} />
     </RTPCMap>
   )
 }

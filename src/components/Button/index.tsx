@@ -11,7 +11,7 @@ const Button: React.FC<IButton> = (props) => {
 
   return (
     <RTPCButton {...props}>
-      {props.loading && <Loading />}
+      {props.loading === 1 && <Loading />}
       {props.children}
     </RTPCButton>
   )
