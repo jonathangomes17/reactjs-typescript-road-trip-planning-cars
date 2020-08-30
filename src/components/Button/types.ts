@@ -3,6 +3,7 @@ interface IButton {
   disabled?: boolean
   loading?: boolean
   bigger?: boolean
+  onClick?: any
   children: any
 }
 

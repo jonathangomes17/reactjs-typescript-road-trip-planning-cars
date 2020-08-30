@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import IInput from './types'
 
-const BaseInput = styled.input`
+export const BaseInput = styled.input`
   box-sizing: border-box;
   margin: 0;
   font-variant: tabular-nums;
