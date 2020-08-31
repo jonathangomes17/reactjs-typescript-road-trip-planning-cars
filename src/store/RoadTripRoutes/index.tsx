@@ -7,8 +7,9 @@ import roadTripRoutesReducer from './reducers'
 const initialState: IState = {
   routes: [
     {
+      id: 1,
       origin: {
-        address: '',
+        address: 'Rua Salvador 718',
         lat: -26.8016998,
         lng: -48.6175719,
       },
@@ -29,6 +30,7 @@ const initialState: IState = {
       },
     },
     {
+      id: 2,
       origin: {
         address: '',
         lat: -25.4525687,
@@ -51,6 +53,7 @@ const initialState: IState = {
       },
     },
     {
+      id: 3,
       origin: {
         address: '',
         lat: -27.4525687,

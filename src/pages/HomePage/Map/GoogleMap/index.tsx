@@ -2,19 +2,19 @@ import React, { useContext, useState, useEffect } from 'react'
 
 import { RoadTripRoutesContext } from '../../../../store/RoadTripRoutes'
 
-import { GoogleMap, LoadScript, Marker, Polyline } from '@react-google-maps/api'
+import { GoogleMap, LoadScript, Marker, Polyline, InfoWindow } from '@react-google-maps/api'
 
 import { IRoadTripRoutes } from '../../../../store/RoadTripRoutes/types'
+
+import Markers from './Markers'
 
 const containerStyle = {
   width: '100%',
   height: '400px',
 }
 
-const label = 'ABCDEFGH'
-
 const GoogleMaps: React.FC = () => {
-  // const [map, setMap] = React.useState(null)
+  const [marker, setMarker] = useState('')
 
   const [path, setPath] = useState([])
 
@@ -35,14 +35,21 @@ const GoogleMaps: React.FC = () => {
     let centerLng = 0
     // let distance = 0
 
+    console.log('ROUTES', routes)
+
     routes.map((route: IRoadTripRoutes) => {
       pathListMount.push(
-        { lat: route.origin.lat, lng: route.origin.lng },
-        { lat: route.destination.lat, lng: route.destination.lng },
+        { lat: route.origin?.lat, lng: route.origin?.lng },
+        { lat: route.destination?.lat, lng: route.destination?.lng },
       )
 
-      centerLat += route.origin.lat + route.destination.lat
-      centerLng += route.origin.lng + route.destination.lng
+      let originLat = route.origin?.lat || 0
+      let destinationLat = route.destination?.lat || 0
+      let originLng = route.origin?.lng || 0
+      let destinationLng = route.destination?.lng || 0
+
+      centerLat += originLat + destinationLat
+      centerLng += originLng + destinationLng
       // distance += route.matrix.distance.value
 
       return route
@@ -63,9 +70,14 @@ const GoogleMaps: React.FC = () => {
   //   return Math.pow(zoomLevel, 2)
   // }
 
-  const handleMarker = (route: IRoadTripRoutes) => {
-    console.log(route)
-  }
+  // const handleMarker = (index: number) => {
+  //   console.log('Marker!')
+  //   setMarker(label[index])
+  // }
+
+  // const handleInfoWindowClose = (route: IRoadTripRoutes) => {
+  //   setMarker('')
+  // }
 
   // const onLoad = React.useCallback(function callback(map) {
   //   // @ts-ignore
@@ -78,16 +90,18 @@ const GoogleMaps: React.FC = () => {
   //   setMap(null)
   // }, [])
 
+  console.log(routes)
+
   return (
     <LoadScript googleMapsApiKey={'AIzaSyDX3HTIsk87Bi4CFYJ2tUSXkAQcSM_BUpA'}>
       <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={zoom}>
         <Polyline
-          key={'Poly!'}
+          key={'Polyline!'}
           path={path}
           options={{
             strokeColor: '#767593',
-            strokeOpacity: 1,
-            strokeWeight: 3,
+            strokeOpacity: 0.75,
+            strokeWeight: 5,
             icons: [
               {
                 icon: '',
@@ -97,35 +111,11 @@ const GoogleMaps: React.FC = () => {
             ],
           }}
         />
-
-        {routes.map((route: IRoadTripRoutes, index: number) => (
-          <React.Fragment key={index}>
-            <Marker
-              key={`marker${label[index]}`}
-              label={label[index]}
-              options={{
-                strokeColor: '#767593',
-              }}
-              position={{
-                lat: route.origin.lat,
-                lng: route.origin.lng,
-              }}
-              onLoad={() => handleMarker}
-            />
-
-            <Marker
-              key={`marker${label[index + 1]}`}
-              label={label[index + 1]}
-              position={{
-                lat: route.destination.lat,
-                lng: route.destination.lng,
-              }}
-            />
-          </React.Fragment>
-        ))}
+        <Markers key={'MarkersPlannig'} />
       </GoogleMap>
     </LoadScript>
   )
 }
 
 export default React.memo(GoogleMaps)
+// export default GoogleMaps

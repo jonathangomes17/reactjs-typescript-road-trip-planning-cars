@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import IInput from './types'
 
 export const BaseInput = styled.input`
@@ -20,6 +20,13 @@ export const BaseInput = styled.input`
   border: 1px solid #d9d9d9;
   border-radius: 2px;
   transition: all 0.3s;
+
+  ${(props: IInput) =>
+    props.disabled &&
+    css`
+      background-color: #d6d6d6;
+      cursor: not-allowed;
+    `}
 `
 
 const RTPCInput: React.FC<IInput> = (props) => {

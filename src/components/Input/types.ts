@@ -3,6 +3,7 @@ interface IInput {
   value?: string
   placeholder?: string
   error?: IInputError
+  disabled?: boolean
 }
 
 interface IInputError {

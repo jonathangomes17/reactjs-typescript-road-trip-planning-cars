@@ -1,4 +1,5 @@
 import { Dispatch } from 'react'
+
 import { IRoadTripRoutes, IAction } from './types'
 
 const addRoute = (dispatch: Dispatch<IAction>, payload: IRoadTripRoutes) => {
@@ -8,4 +9,11 @@ const addRoute = (dispatch: Dispatch<IAction>, payload: IRoadTripRoutes) => {
   })
 }
 
-export { addRoute }
+const removeRoute = (dispatch: Dispatch<IAction>, routeId: number) => {
+  dispatch({
+    type: 'REMOVE_ROUTE',
+    payload: { route: { id: routeId, origin: null, destination: null, matrix: null } },
+  })
+}
+
+export { addRoute, removeRoute }

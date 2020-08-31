@@ -14,7 +14,9 @@ import { getLatLng, getDistanceMatrix } from '../../../api'
 import { addRoute } from '../../../store/RoadTripRoutes/actions'
 
 const Form: React.FC = (props) => {
-  const { dispatch } = useContext(RoadTripRoutesContext)
+  const { state, dispatch } = useContext(RoadTripRoutesContext)
+
+  const { routes } = state
 
   const [loading, setLoading] = useState(0)
 
@@ -22,6 +24,7 @@ const Form: React.FC = (props) => {
     id: 'origin',
     placeholder: 'Origem',
     defaultValue: '',
+    disabled: true,
     error: {
       message: 'Origem precisa ser preenchido',
       dispatch: false,
@@ -87,6 +90,7 @@ const Form: React.FC = (props) => {
     const distanceMatrix = await getDistanceMatrix(locationOrigin, locationDestination)
 
     addRoute(dispatch, {
+      id: Math.random(),
       origin: {
         address: origin.value,
         ...responseOrigin.results[0].geometry.location,

@@ -4,6 +4,25 @@ const roadTripRoutesReducer = (state: IState, action: IAction) => {
   switch (action.type) {
     case 'ADD_ROUTE':
       return { ...state, routes: [...state.routes, action.payload.route] }
+    case 'REMOVE_ROUTE':
+      let newRouteDestination: any = null
+      let indexModifyOrigin = -1
+
+      let newRoutes = state.routes.filter((route, index) => {
+        if (route.id === action.payload.route.id) {
+          newRouteDestination = state.routes[index === 0 ? 0 : index - 1]
+          indexModifyOrigin = index + 1
+          return
+        }
+
+        if (indexModifyOrigin === index) {
+          route.origin = newRouteDestination.destination
+        }
+
+        return route
+      })
+
+      return { ...state, routes: newRoutes }
     default:
       return state
   }

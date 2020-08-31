@@ -1,24 +1,25 @@
+interface IOriginAndDestination {
+  address: string
+  lat: number
+  lng: number
+}
+
+interface IMatrix {
+  distance: {
+    text: string
+    value: number
+  }
+  duration: {
+    text: string
+    value: number
+  }
+}
+
 export interface IRoadTripRoutes {
-  origin: {
-    address: string
-    lat: number
-    lng: number
-  }
-  destination: {
-    address: string
-    lat: number
-    lng: number
-  }
-  matrix: {
-    distance: {
-      text: string
-      value: number
-    }
-    duration: {
-      text: string
-      value: number
-    }
-  }
+  id: number
+  origin: IOriginAndDestination | null
+  destination: IOriginAndDestination | null
+  matrix: IMatrix | null
 }
 
 export interface IAction {
