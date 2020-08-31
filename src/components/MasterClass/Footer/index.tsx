@@ -1,10 +1,11 @@
 import React from 'react'
+import RTPCFooter from './styles'
 
 const Footer = () => {
   return (
-    <footer>
+    <RTPCFooter>
       <h5>Footer</h5>
-    </footer>
+    </RTPCFooter>
   )
 }
 

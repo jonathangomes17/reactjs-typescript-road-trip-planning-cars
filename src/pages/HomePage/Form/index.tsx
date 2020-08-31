@@ -146,8 +146,6 @@ const Form: React.FC = () => {
 
     const climate = await getClimate(city)
 
-    console.log('responseDestination.results[0]!', responseDestination.results[0])
-
     addRoute(dispatch, {
       id: uuidv4(),
       origin: {

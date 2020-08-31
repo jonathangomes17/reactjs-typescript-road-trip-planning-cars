@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react'
 
 import { RoadTripRoutesContext } from '../../../../store/RoadTripRoutes'
 
-import { GoogleMap, LoadScript, Marker, Polyline, InfoWindow } from '@react-google-maps/api'
+import { GoogleMap, LoadScript, Polyline } from '@react-google-maps/api'
 
 import { IRoadTripRoutes } from '../../../../store/RoadTripRoutes/types'
 

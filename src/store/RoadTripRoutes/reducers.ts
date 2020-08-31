@@ -17,7 +17,7 @@ const roadTripRoutesReducer = (state: IState, action: IAction) => {
         if (route.id === action.payload.route.id) {
           newRouteDestination = state.routes[index === 0 ? 0 : index - 1]
           indexModifyOrigin = index + 1
-          return
+          return null
         }
 
         if (indexModifyOrigin === index) {
