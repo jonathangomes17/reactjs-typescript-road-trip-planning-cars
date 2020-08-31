@@ -9,10 +9,10 @@ const addRoute = (dispatch: Dispatch<IAction>, payload: IRoadTripRoutes) => {
   })
 }
 
-const removeRoute = (dispatch: Dispatch<IAction>, routeId: number) => {
+const removeRoute = (dispatch: Dispatch<IAction>, routeId: string) => {
   dispatch({
     type: 'REMOVE_ROUTE',
-    payload: { route: { id: routeId, origin: null, destination: null, matrix: null } },
+    payload: { route: { id: routeId, origin: null, destination: null, matrix: null, climate: null, stay: null } },
   })
 }
 

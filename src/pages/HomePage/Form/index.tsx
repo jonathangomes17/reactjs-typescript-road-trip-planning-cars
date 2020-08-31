@@ -1,5 +1,7 @@
 import React, { useState, useContext } from 'react'
 
+import { v4 as uuidv4 } from 'uuid'
+
 // Stores
 import { RoadTripRoutesContext } from '../../../store/RoadTripRoutes'
 
@@ -10,10 +12,10 @@ import Grid from '../../../components/Grid'
 import Row from '../../../components/Grid/Row'
 
 // Api
-import { getLatLng, getDistanceMatrix } from '../../../api'
+import { getLatLng, getDistanceMatrix, getClimate } from '../../../api'
 import { addRoute } from '../../../store/RoadTripRoutes/actions'
 
-const Form: React.FC = (props) => {
+const Form: React.FC = () => {
   const { state, dispatch } = useContext(RoadTripRoutesContext)
 
   const { routes } = state
@@ -24,7 +26,7 @@ const Form: React.FC = (props) => {
     id: 'origin',
     placeholder: 'Origem',
     defaultValue: '',
-    disabled: true,
+    disabled: routes.length > 0,
     error: {
       message: 'Origem precisa ser preenchido',
       dispatch: false,
@@ -51,6 +53,49 @@ const Form: React.FC = (props) => {
     },
   })
 
+  /**
+   * Busca o último destino de rota
+   */
+  const getLastDestinationInRoutes = (routes: any) => {
+    if (routes && routes.length === 0) return null
+    return routes.slice(-1).pop()['destination']
+  }
+
+  /**
+   * Busca a cidade baseado no retorno de endereços do Google
+   */
+  const getCity = (addressComponents: string[]) => {
+    const city: any = addressComponents.filter((address: any) => {
+      return address.types[0] === 'administrative_area_level_1'
+    })
+
+    if (city.length === 0) return null
+
+    return city[0].long_name
+  }
+
+  const getFormattedClimate = (actuallyClimate: any) => {
+    if (!actuallyClimate) return null
+
+    return {
+      temperature: Math.floor(actuallyClimate.main.temp - 273.15),
+      weather: actuallyClimate.weather[0].description,
+    }
+  }
+
+  const getFormattedMatrix = (actuallyDistanceMatrix: any) => {
+    if (!actuallyDistanceMatrix) return null
+
+    const results = actuallyDistanceMatrix.rows[0].elements[0]
+
+    if (results.status === 'ZERO_RESULTS') return null
+
+    return {
+      distance: parseFloat((results.distance.value / 1000 / 1000).toFixed(2)),
+      duration: results.duration.text,
+    }
+  }
+
   const handleAddRoute = async () => {
     setLoading(1)
 
@@ -58,11 +103,13 @@ const Form: React.FC = (props) => {
     const destination = document.getElementById('destination') as HTMLInputElement
     const timeOfStay = document.getElementById('time-of-stay') as HTMLInputElement
 
-    setInputOrigin({
-      ...inputOrigin,
-      defaultValue: origin.value,
-      error: { ...inputOrigin.error, dispatch: !origin.value },
-    })
+    if (routes.length === 0) {
+      setInputOrigin({
+        ...inputOrigin,
+        defaultValue: origin.value,
+        error: { ...inputOrigin.error, dispatch: !origin.value },
+      })
+    }
 
     setInputDestionation({
       ...inputDestination,
@@ -76,33 +123,44 @@ const Form: React.FC = (props) => {
       error: { ...inputTimeOfStay.error, dispatch: !timeOfStay.value },
     })
 
-    if (!origin.value || !destination.value || !timeOfStay.value) {
+    if ((routes.length === 0 && !origin.value) || !destination.value || !timeOfStay.value) {
       setLoading(0)
       return
     }
 
-    const responseOrigin = await getLatLng('Rua Salvador 178 Cajuru Parana,+BR')
-    const locationOrigin = responseOrigin.results[0].geometry.location
+    let locationOrigin = getLastDestinationInRoutes(routes)
+    let addressOrigin = locationOrigin ? locationOrigin.address : null
 
-    const responseDestination = await getLatLng('Beto Carrero,+BR')
+    if (!locationOrigin) {
+      const responseOrigin = await getLatLng(`${origin.value},+BR`)
+      locationOrigin = responseOrigin.results[0].geometry.location
+      addressOrigin = responseOrigin.results[0].formatted_address
+    }
+
+    const responseDestination = await getLatLng(`${destination.value},+BR`)
     const locationDestination = responseDestination.results[0].geometry.location
 
     const distanceMatrix = await getDistanceMatrix(locationOrigin, locationDestination)
 
+    let city = getCity(responseDestination.results[0].address_components)
+
+    const climate = await getClimate(city)
+
+    console.log('responseDestination.results[0]!', responseDestination.results[0])
+
     addRoute(dispatch, {
-      id: Math.random(),
+      id: uuidv4(),
       origin: {
-        address: origin.value,
-        ...responseOrigin.results[0].geometry.location,
+        address: addressOrigin,
+        ...locationOrigin,
       },
       destination: {
-        address: destination.value,
+        address: responseDestination.results[0].formatted_address,
         ...responseDestination.results[0].geometry.location,
       },
-      matrix: {
-        distance: distanceMatrix.rows[0].elements[0].distance,
-        duration: distanceMatrix.rows[0].elements[0].duration,
-      },
+      matrix: getFormattedMatrix(distanceMatrix),
+      climate: getFormattedClimate(climate),
+      stay: timeOfStay.value,
     })
 
     setLoading(0)

@@ -1,9 +1,14 @@
 import { IState, IAction } from './types'
+import { setCookie } from '../../helpers/cookie'
 
 const roadTripRoutesReducer = (state: IState, action: IAction) => {
   switch (action.type) {
     case 'ADD_ROUTE':
-      return { ...state, routes: [...state.routes, action.payload.route] }
+      let newState = { ...state, routes: [...state.routes, action.payload.route] }
+
+      setCookie('_rtpcRoutes', JSON.stringify(newState.routes), 900)
+
+      return newState
     case 'REMOVE_ROUTE':
       let newRouteDestination: any = null
       let indexModifyOrigin = -1
@@ -21,6 +26,8 @@ const roadTripRoutesReducer = (state: IState, action: IAction) => {
 
         return route
       })
+
+      setCookie('_rtpcRoutes', JSON.stringify(newRoutes), 900)
 
       return { ...state, routes: newRoutes }
     default:

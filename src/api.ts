@@ -22,7 +22,7 @@ const getLatLng = async (address: string) => {
 
 const getClimate = async (cityName: string) => {
   const response = await fetch(
-    `api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=db7a0fb364895141320aa24cd0e776e9`,
+    `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=db7a0fb364895141320aa24cd0e776e9`,
   )
   return response.json()
 }

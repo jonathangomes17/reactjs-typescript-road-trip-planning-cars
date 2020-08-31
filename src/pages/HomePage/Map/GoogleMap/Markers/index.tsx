@@ -15,7 +15,7 @@ const Markers: React.FC = () => {
 
   const { routes } = state
 
-  const labelByFlagName = 'ABCDEFGH'
+  const labelByFlagName = 'ABCDEFGHIJLMNOPQRSTUVWXYZ'
 
   const handleMarker = (marker: string) => {
     if (markerFlagged) {
@@ -27,7 +27,6 @@ const Markers: React.FC = () => {
   }
 
   const handleClose = () => {
-    console.log('Fechando!', markerFlagged)
     setMarkerFlagged('')
   }
 
@@ -54,8 +53,9 @@ const Markers: React.FC = () => {
             id: route.id,
             key: `MarkerBox${flagName}`,
             address: route.destination?.address,
-            hour: route.matrix?.duration.text,
-            climate: 'Sol',
+            hour: route.matrix?.duration,
+            climate: route.climate,
+            stay: route.stay,
             closeBox: handleClose,
           }
 

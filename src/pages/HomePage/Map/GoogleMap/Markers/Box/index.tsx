@@ -4,10 +4,11 @@ import { removeRoute } from '../../../../../../store/RoadTripRoutes/actions'
 import Button from '../../../../../../components/Button'
 
 interface IBox {
-  id: number
+  id: string
   address?: string
   hour?: string
-  climate?: string
+  climate?: object | null
+  stay?: string | null
   closeBox: Function
 }
 
@@ -16,7 +17,9 @@ const Box: React.FC<IBox> = (props) => {
 
   const { address } = props
   const { hour } = props
-  const { climate } = props
+  const { climate }: any = props
+  const { weather, temperature } = climate
+  const { stay } = props
   const { id } = props
 
   const handleRemoveRoute = <_, MouseEvent>(event: MouseEvent) => {
@@ -30,8 +33,8 @@ const Box: React.FC<IBox> = (props) => {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          height: '80px',
-          width: '200px',
+          height: '100px',
+          width: '300px',
         }}
       >
         <strong
@@ -49,7 +52,14 @@ const Box: React.FC<IBox> = (props) => {
         </span>
 
         <span>
-          Previsão do tempo: <strong>{climate}</strong>
+          Previsão do tempo:
+          <strong>
+            {weather} ({temperature}º)
+          </strong>
+        </span>
+
+        <span>
+          Tempo de permanência: <strong>{stay}</strong>
         </span>
 
         <br />
