@@ -10,8 +10,22 @@ const BaseFooter = styled.footer`
   margin-top: 1rem;
 `
 
+const Container = styled.div`
+  padding: 0 10rem;
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    padding: 0 1rem;
+  }
+`
+
 const RTPCFooter: React.FC = (props) => {
   return <BaseFooter {...props}>{props.children}</BaseFooter>
 }
 
-export default RTPCFooter
+const RTPCFooterContainer: React.FC = ({ children }) => {
+  return <Container>{children}</Container>
+}
+
+export { RTPCFooter, RTPCFooterContainer }
